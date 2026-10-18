@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 15 - Lourdes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            var(--color-primary): #b56576;
+            --color-primary: #b56576; /* Rosa viejo / Mauve */
+            --color-bg: #fdfbfb;
+            --color-text: #2a2a2a;
+            --color-white: #ffffff;
+        }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Lato', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--color-bg); 
+            color: var(--color-text); 
+            text-align: center; 
+        }
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 600; 
+            color: var(--color-primary);
+        }
+        
+        /* Música Flotante */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+            z-index: 1000;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .music-btn:hover { 
+            transform: scale(1.05); 
+            background-color: #9d5262;
+        }
+
+        /* Sección Principal / Portada */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.7)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--color-white);
+            padding: 20px;
+        }
+        .hero h1 { 
+            font-size: 5.5rem; 
+            margin: 0; 
+            font-style: italic; 
+            letter-spacing: 2px; 
+            color: var(--color-white);
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+        }
+        .hero p { 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            margin-top: 10px; 
+        }
+        
+        /* Secciones Generales */
+        .section { padding: 80px 20px; }
+        .section-alt { background-color: var(--color-white); }
+        
+        /* Cuenta Regresiva */
+        .countdown-wrapper { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            margin-top: 40px; 
+            flex-wrap: wrap; 
+        }
+        .time-box {
+            background-color: var(--color-white);
+            color: var(--color-primary);
+            padding: 20px;
+            border-radius: 12px;
+            min-width: 90px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(181, 101, 118, 0.1);
+        }
+        .time-box span { 
+            display: block; 
+            font-size: 2.5rem; 
+            font-family: 'Playfair Display', serif; 
+        }
+        .time-box p { margin: 5px 0 0; font-size: 0.85rem; text-transform: uppercase; }
+        
+        /* Tarjeta de Detalles */
+        .card {
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 50px 30px;
+            background: var(--color-white); 
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--color-primary);
+        }
+        .icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .card p { font-size: 1.1rem; line-height: 1.6; }
+        
+        /* Botones */
+        .btn {
+            display: inline-block; 
+            padding: 15px 35px; 
+            margin-top: 25px;
+            background-color: var(--color-primary); 
+            color: var(--color-white);
+            text-decoration: none; 
+            border-radius: 30px; 
+            font-weight: bold;
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 20px rgba(181, 101, 118, 0.4); 
+            background-color: #9d5262;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            margin-left: 10px;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(181, 101, 118, 0.05);
+            color: var(--color-primary);
+        }
+        
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 4rem; }
+            .time-box { min-width: 75px; padding: 15px; }
+            .time-box span { font-size: 2rem; }
+            .music-btn { bottom: 15px; right: 15px; padding: 10px 15px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón y Reproductor de Música -->
+    <button id="music-btn" class="music-btn">🎵 Reproducir Música</button>
+    <!-- NOTA: Aquí debes poner el archivo de música. Sube un mp3 a tu GitHub y cambia 'cancion.mp3' por el nombre de tu archivo -->
+    <audio id="bg-music" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Inicio / Portada -->
+    <div class="hero">
+        <p>Mis 15 Años</p>
+        <h1>Lourdes</h1>
+        <p>11.12.2026</p>
+    </div>
+
+    <!-- Cuenta Regresiva -->
+    <div class="section section-alt">
+        <h2>Cada vez falta menos...</h2>
+        <div class="countdown-wrapper" id="countdown">
+            <div class="time-box"><span id="days">00</span><p>Días</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Hs</p></div>
+            <div class="time-box"><span id="minutes">00</span><p>Min</p></div>
+            <div class="time-box"><span id="seconds">00</span><p>Seg</p></div>
+        </div>
+    </div>
+
+    <!-- Detalles de la Fiesta y Ubicación -->
+    <div class="section">
+        <div class="card">
+            <div class="icon">🥂</div>
+            <h2>La Fiesta</h2>
+            <p><strong>Día:</strong> Viernes 11 de Diciembre de 2026</p>
+            <p><strong>Horario:</strong> 21:30 hs</p>
+            <br>
+            <p><strong>Lugar:</strong> Janos Hurlingham</p>
+            <p>Gral. Pedro Díaz 1800<br>Hurlingham, Pcia. de Buenos Aires</p>
+            <a href="https://maps.app.goo.gl/search/Janos+Hurlingham+Gral+Pedro+Diaz+1800" target="_blank" class="btn">📍 Ver en el Mapa</a>
+        </div>
+    </div>
+
+    <!-- Confirmación de Asistencia -->
+    <div class="section section-alt">
+        <h2>Confirmación de Asistencia</h2>
+        <p>¡Me encantaría que compartas esta noche inolvidable conmigo!</p>
+        <p>Por favor, confirmá tu asistencia antes del 20 de Noviembre.</p>
+        
+        <!-- ENLACE AL FORMULARIO DE GOOGLE -->
+        <a href="AQUI_PONES_EL_LINK_DE_TU_GOOGLE_FORM" target="_blank" class="btn">📝 Confirmar Asistencia</a>
+        <!-- Opción secundaria por si alguien prefiere WhatsApp -->
+        <a href="https://wa.me/5491100000000?text=Hola!%20Tengo%20una%20duda%20con%20la%20invitacion%20de%20Lourdes" target="_blank" class="btn btn-secondary">💬 Consultas</a>
+    </div>
+
+    <script>
+        // Lógica de la Música
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🎵 Reproducir Música';
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '⏸️ Pausar Música';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Configuración de la Cuenta Regresiva (11 de Dic 2026 a las 21:30)
+        const countDownDate = new Date("Dec 11, 2026 21:30:00").getTime();
+        
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML = "<h3 style='margin-top: 20px;'>¡Llegó el gran día! Festejemos juntos.</h3>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
