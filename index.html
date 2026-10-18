@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis 15 - Lourdes</title>
-    <!-- Fuentes modernas y elegantes de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta de colores respetando las restricciones (Sin azul, verde ni dorado) */
-            --color-primary: #b56576; /* Rosa viejo / Mauve elegante */
-            --color-bg: #fdfbfb; /* Blanco cálido */
-            --color-text: #2a2a2a; /* Gris oscuro para el texto */
+            var(--color-primary): #b56576;
+            --color-primary: #b56576; /* Rosa viejo / Mauve */
+            --color-bg: #fdfbfb;
+            --color-text: #2a2a2a;
             --color-white: #ffffff;
         }
         * { box-sizing: border-box; }
@@ -29,6 +28,32 @@
             color: var(--color-primary);
         }
         
+        /* Música Flotante */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+            z-index: 1000;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .music-btn:hover { 
+            transform: scale(1.05); 
+            background-color: #9d5262;
+        }
+
         /* Sección Principal / Portada */
         .hero {
             position: relative;
@@ -37,7 +62,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Aquí luego pondremos tu foto real. Por ahora uso una imagen elegante de luces de fiesta de prueba */
             background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.7)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80') center/cover;
             color: var(--color-white);
             padding: 20px;
@@ -83,13 +107,7 @@
             font-size: 2.5rem; 
             font-family: 'Playfair Display', serif; 
         }
-        .time-box p { 
-            margin: 5px 0 0; 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            color: var(--color-text); 
-        }
+        .time-box p { margin: 5px 0 0; font-size: 0.85rem; text-transform: uppercase; }
         
         /* Tarjeta de Detalles */
         .card {
@@ -124,16 +142,33 @@
             box-shadow: 0 10px 20px rgba(181, 101, 118, 0.4); 
             background-color: #9d5262;
         }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            margin-left: 10px;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(181, 101, 118, 0.05);
+            color: var(--color-primary);
+        }
         
-        /* Responsivo para Celulares */
         @media (max-width: 600px) {
             .hero h1 { font-size: 4rem; }
             .time-box { min-width: 75px; padding: 15px; }
             .time-box span { font-size: 2rem; }
+            .music-btn { bottom: 15px; right: 15px; padding: 10px 15px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Botón y Reproductor de Música -->
+    <button id="music-btn" class="music-btn">🎵 Reproducir Música</button>
+    <!-- NOTA: Aquí debes poner el archivo de música. Sube un mp3 a tu GitHub y cambia 'cancion.mp3' por el nombre de tu archivo -->
+    <audio id="bg-music" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Inicio / Portada -->
     <div class="hero">
@@ -173,11 +208,29 @@
         <p>¡Me encantaría que compartas esta noche inolvidable conmigo!</p>
         <p>Por favor, confirmá tu asistencia antes del 20 de Noviembre.</p>
         
-        <!-- Aquí luego pondremos tu número de WhatsApp real -->
-        <a href="https://wa.me/5491100000000?text=Hola!%20Confirmo%20mi%20asistencia%20a%20los%2015%20de%20Lourdes!%20%F0%9F%A5%B3" target="_blank" class="btn">💬 Confirmar por WhatsApp</a>
+        <!-- ENLACE AL FORMULARIO DE GOOGLE -->
+        <a href="AQUI_PONES_EL_LINK_DE_TU_GOOGLE_FORM" target="_blank" class="btn">📝 Confirmar Asistencia</a>
+        <!-- Opción secundaria por si alguien prefiere WhatsApp -->
+        <a href="https://wa.me/5491100000000?text=Hola!%20Tengo%20una%20duda%20con%20la%20invitacion%20de%20Lourdes" target="_blank" class="btn btn-secondary">💬 Consultas</a>
     </div>
 
     <script>
+        // Lógica de la Música
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🎵 Reproducir Música';
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '⏸️ Pausar Música';
+            }
+            isPlaying = !isPlaying;
+        });
+
         // Configuración de la Cuenta Regresiva (11 de Dic 2026 a las 21:30)
         const countDownDate = new Date("Dec 11, 2026 21:30:00").getTime();
         
